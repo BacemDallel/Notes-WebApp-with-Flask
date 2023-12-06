@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+
+<style>
+    h1 {
+        text-align: center;
+        font-weight: bold;
+        #player {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+    }
+
+    }
+
+</style>
+
+<h1>{{ user.username }}'s Notes</h1>
+<div id="player"></div>
+    <script>
+        function onYouTubeIframeAPIReady() {
+            new YT.Player('player', {
+                height: '315',
+                width: '200',
+                videoId: 'v9XyIGXcRck',
+                playerVars: {
+                    'autoplay': 1,
+                },
+
+            });
+        }
+    </script>
+
+<ul class="list-group list-group-flush" id="notes">
+    {% for note in user.notes%}
+    <li class="list-group-item">{{ note.data }}
+        <button type="button" class="close" onclick="deleteNote({{ note.id }})">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {% endfor %}
+    </li>
+
+</ul>
+
+<form method="POST">
+    <div class="form-group">
+        <label for="note">Add Note:</label>
+        <textarea name="note" id="note" class="form-control"></textarea>
+    </div>
+    <div align="center">
+        <button type="submit" class="btn btn-primary">Add Note</button>
+    </div>
+</form>
+<script src="https://www.youtube.com/iframe_api"></script>
+
+{% endblock %}
